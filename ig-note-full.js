@@ -76,8 +76,13 @@
     .ig-control input,
     .ig-control select,
     .ig-control button{
-      width:100%;padding:6px;font-size:14px
+      width:100%;padding:6px;font-size:14px;box-sizing:border-box;display:block
     }
+
+    .ig-color-row input[type="color"]{width:46px;flex:0 0 46px;padding:0;border:none}
+    .ig-color-row .ig-color-options{flex:1;display:flex;gap:6px;flex-wrap:wrap}
+
+    .ig-row input,.ig-row select{width:100%;box-sizing:border-box;padding:6px;font-size:14px}
 
     .ig-color-row{display:flex;align-items:center;gap:8px}
     .ig-color-options{display:flex;gap:6px;flex-wrap:wrap}
@@ -260,12 +265,20 @@
   const btn=document.createElement('div');
   btn.className='ig-float-btn';
   btn.textContent='⚙️';
-  btn.onclick=()=>panel(`
-    <h3>备注设置</h3>
-    <button onclick="(${openNoteManager})()">📒 备注名管理</button>
-    <button onclick="(${openGroupManager})()">🗂️ 分组管理</button>
-    <button onclick="(${openSyncPanel})()">🔄 导入 / 导出</button>
-  `);
+  btn.onclick = () => {
+    const p = panel(`
+      <h3>备注设置</h3>
+      <button id="openNotes">📒 备注名管理</button>
+      <button id="openGroups">🗂️ 分组管理</button>
+      <button id="openSync">🔄 导入 / 导出</button>
+    `);
+    const n = p.querySelector('#openNotes');
+    const g = p.querySelector('#openGroups');
+    const s = p.querySelector('#openSync');
+    n && (n.onclick = () => window.openNoteManager && window.openNoteManager());
+    g && (g.onclick = () => window.openGroupManager && window.openGroupManager());
+    s && (s.onclick = () => window.openSyncPanel && window.openSyncPanel());
+  };
   document.body.appendChild(btn);
 
   /* ================= 备注名管理 ================= */
@@ -330,15 +343,15 @@
       const r=document.createElement('div');
       r.className='ig-row';
       r.innerHTML=`
-        <div class="ig-user">${id}</div>
-        <input value="${g.name}">
-        <div><input type="color" value="${g.color}"></div>
-        ${id==='default'?'':'<button>删</button>'}
-      `;
+          <div class="ig-user">${id}</div>
+          <input type="text" value="${g.name}">
+          <div><input type="color" value="${g.color}"></div>
+          ${id==='default'?'':'<button>删</button>'}
+        `;
 
-      const name=r.querySelector('input[type=text]');
-      const color=r.querySelector('input[type=color]');
-      name.onchange=()=>{g.name=name.value;saveGroups(groups);};
+        const name=r.querySelector('input[type="text"]');
+        const color=r.querySelector('input[type="color"]');
+        name.onchange=()=>{g.name=name.value;saveGroups(groups);};
       color.onchange=()=>{g.color=color.value;saveGroups(groups);};
 
       const del=r.querySelector('button');
