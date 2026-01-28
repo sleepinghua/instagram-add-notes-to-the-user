@@ -118,7 +118,11 @@
 
   function getUsernameFromAnchor(a) {
     const m = a.href?.match(/^https:\/\/www\.instagram\.com\/([a-zA-Z0-9._]+)\/$/);
-    return m ? m[1] : null;
+    if (!m) return null;
+    const name = m[1];
+    // skip special paths like reels and explore on dynamic feed
+    if (name === 'reels' || name === 'explore') return null;
+    return name;
   }
 
   /* ================= 页面显示 ================= */
@@ -223,6 +227,17 @@
     if (a.dataset.igDone) return;
     const u = getUsernameFromAnchor(a);
     if (!u) return;
+    // If this anchor wraps a user avatar image, skip adding the note button.
+    const img = a.querySelector('img');
+    if (img) {
+      const alt = (img.alt || '').toLowerCase();
+      const w = img.width || img.naturalWidth || 0;
+      const h = img.height || img.naturalHeight || 0;
+      if (alt.includes('profile') || alt.includes(u.toLowerCase()) || (w && h && w <= 48 && h <= 48)) {
+        a.dataset.igDone = '1';
+        return;
+      }
+    }
     a.dataset.igDone = '1';
 
     const w=document.createElement('span');
