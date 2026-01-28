@@ -6,7 +6,7 @@
 // @version      3.1.0
 // @description  Instagram 用户备注：分组、颜色、统一入口、管理、同步
 // @match        https://www.instagram.com/*
-// @require      https://github.com/sleepinghua/instagram-add-notes-to-the-user/blob/main/ig-note-full.js
+// @require      https://raw.githubusercontent.com/sleepinghua/instagram-add-notes-to-the-user/refs/heads/main/ig-note-full.js
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_listValues
