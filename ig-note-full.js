@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name         Instagram 用户备注（终极完整稳定版）
-// @namespace    ig-note-ultimate-complete
+// @name         Instagram - Add notes to the user Rebuilt by AI
+// @name:zh-CN   Instagram - 为用户添加备注(别名/标签) AI重构版
+// @namespace    https://greasyfork.org/zh-CN/users/193133-pana      
+// @homepage     https://github.com/sleepinghua/instagram-add-notes-to-the-user
 // @version      3.1.0
-// @description  Instagram 用户备注：分组、颜色、统一入口、管理、同步（最终定稿）
+// @description  Instagram 用户备注：分组、颜色、统一入口、管理、同步
 // @match        https://www.instagram.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue
