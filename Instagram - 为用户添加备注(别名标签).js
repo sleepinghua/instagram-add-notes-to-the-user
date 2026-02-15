@@ -28,21 +28,12 @@
 // @grant               GM_unregisterMenuCommand
 // @grant               GM_addValueChangeListener
 // @grant               GM_removeValueChangeListener
+// @downloadURL https://update.greasyfork.org/scripts/387871/Instagram%20-%20Add%20notes%20to%20the%20user.user.js
+// @updateURL https://update.greasyfork.org/scripts/387871/Instagram%20-%20Add%20notes%20to%20the%20user.meta.js
 // ==/UserScript==
- 
+
 (function () {
   'use strict';
-  // 脚本说明：
-  // 这个 userscript 为 Instagram 页面添加“备注/标签”功能，主要职责包括：
-  // - 在首页、对话、故事等位置为用户 ID 注入备注按钮或显示备注信息
-  // - 提供分组/颜色等配置并在 UI（面板）中管理
-  // - 使用 Note_Obj 提供的辅助函数进行 DOM 查询与统一处理
-  // 文件结构（概览）：
-  // 1. 配置（selector、样式常量、nameSet）
-  // 2. 初始化 noteObj（第三方库封装）
-  // 3. 各类注入/渲染函数（homepageNote、anchorElementNote、userPageNote 等）
-  // 4. 变化监听与入口 initInstagram()
-  // 注：为保持原有逻辑尽量不改动代码，仅添加注释便于理解。
   const UPDATED = '2023-04-21';
   const INS_ICON = {
     NOTE_BLACK: 'url(data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiBhcmlhLWxhYmVsbGVkYnk9Im5ld0ljb25UaXRsZSIgc3Ryb2tlPSJyZ2IoMzgsIDM4LCAzOCkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZmlsbD0ibm9uZSIgY29sb3I9InJnYigzOCwgMzgsIDM4KSI+IDx0aXRsZSBpZD0ibmV3SWNvblRpdGxlIj5OZXc8L3RpdGxlPiA8cGF0aCBkPSJNMTkgMTRWMjJIMi45OTk5N1Y0SDEzIi8+IDxwYXRoIGQ9Ik0xNy40NjA4IDQuMDM5MjFDMTguMjQxOCAzLjI1ODE3IDE5LjUwODIgMy4yNTgxNiAyMC4yODkyIDQuMDM5MjFMMjAuOTYwOCA0LjcxMDc5QzIxLjc0MTggNS40OTE4NCAyMS43NDE4IDYuNzU4MTcgMjAuOTYwOCA3LjUzOTIxTDExLjU4NTggMTYuOTE0MkMxMS4yMTA3IDE3LjI4OTMgMTAuNzAyIDE3LjUgMTAuMTcxNiAxNy41TDcuNSAxNy41TDcuNSAxNC44Mjg0QzcuNSAxNC4yOTggNy43MTA3MSAxMy43ODkzIDguMDg1NzkgMTMuNDE0MkwxNy40NjA4IDQuMDM5MjFaIi8+IDxwYXRoIGQ9Ik0xNi4yNSA1LjI1TDE5Ljc1IDguNzUiLz4gPC9zdmc+)'
@@ -94,10 +85,6 @@
       user: '._aa0- ._ab8x .xt0psk2 a'
     }
   };
-  // selector：页面上不同场景使用的 CSS 选择器集合
-  // - homepage: 首页流中常用的 article、用户链接、图标与评论选择器
-  // - userPage / stories / dialog 等：分别对应用户主页、故事、对话等区域
-  // 通过这些选择器，脚本可以在不同页面片段中定位到目标元素并注入备注按钮或文本
   const nameSet = {
     backgroundBox: 'note-obj-ins-background-box',
     userpageTag: 'note-obj-ins-userpage-tag',
@@ -106,8 +93,6 @@
     homepageBtn: 'note-obj-ins-homepage-btn',
     userpageBtn: 'note-obj-ins-userpage-btn'
   };
-  // nameSet：一组 CSS 类名常量，用于给注入的元素（按钮/标签）统一样式
-  // 便于在样式定义 INS_STYLE 中使用并在代码中引用
   const INS_STYLE = `
     .${nameSet.backgroundBox} {
       display: inline-block;
@@ -146,8 +131,6 @@
     .${nameSet.fontBold} {
       font-weight: bold;
     }
-    // INS_STYLE：注入页面时使用的内联样式（字符串），定义了按钮、标签、面板等的视觉样式
-    // 这些样式与 nameSet 的类名配合，控制按钮图标、外观和交互 hover 行为
     .note-obj-settings-frame-card label {
       color: #2f2f2f;
     }
@@ -184,8 +167,6 @@
     },
     changeEvent: instagramChangeEvent
   });
-  // noteObj：基于外部 Note_Obj 类的实例，负责封装备注的创建、渲染、配置与持久化等逻辑
-  // 通过传入 style、settings、changeEvent 等参数，使脚本与通用库结合。
   function homepageNote(ele, changeId) {
     const user = noteObj.fn.queryAnchor(ele, selector.homepage.id);
     if (user) {
@@ -199,11 +180,6 @@
       }
     }
   }
-    // homepageNote：处理首页（Feed）中的备注注入。
-    // 它会找到帖子作者的链接，提取用户名，并在合适的位置插入备注按钮/展示。
-  // homepageNote：在首页的某条 article 上注入备注（若存在备注数据），
-  // - 使用 noteObj 的 helper 查询到用户链接并通过 handler 渲染按钮或标签
-  // - replaceHomepageID 控制是否用不同的渲染方式（span / 背景盒子）
   function homepageCommentNote(ele, changeId) {
     for (const comment of noteObj.fn.queryAllAnchor(ele, selector.homepage.commentId, 'info')) {
       const commentId = noteObj.fn.getIdFromUrl(comment.href);
@@ -212,9 +188,6 @@
       }
     }
   }
-    // homepageCommentNote：为首页中评论中的用户链接注入备注（例如评论作者）
-    // 评论区的 DOM 结构与帖子略有不同，函数会使用特定选择器来定位评论作者并附加按钮。
-  // homepageCommentNote：为首页中评论中的用户链接注入备注（例如评论作者）
   function homepageCommentAtNote(ele, changeId) {
     const commentAtId = noteObj.fn.getIdFromUrl(ele.href);
     if (!changeId || changeId === commentAtId) {
@@ -224,26 +197,18 @@
       });
     }
   }
-    // homepageCommentAtNote：处理评论中的 @ 提及并为被提及用户添加备注按钮。
-    // 用在评论中的 @username 场景，选择器和插入位置会有区别。
-  // homepageCommentAtNote：处理 "@某人" 的引用场景，渲染时带上前缀 '@' 并可能显示标题信息
   function dialogCommentNote(ele, chagneId) {
     const picCommentId = noteObj.fn.getIdFromUrl(ele.href);
     if (!chagneId || chagneId === picCommentId) {
       noteObj.handler(picCommentId, ele);
     }
   }
-    // dialogCommentNote：处理对话/私信中的用户名，确保对话场景下也能展示备注按钮。
-    // 私信列表和对话窗的 DOM 结构与公开页面不同，需要单独处理。
-  // dialogCommentNote：对话/弹窗场景下的评论用户注入备注
   function dialogCommentAtNote(ele, changeId) {
     if (!ele.classList.contains(selector.homepage.commentId.replace(/^\.|\s+.*$/g, ''))) {
       const picCommentAtId = noteObj.fn.getIdFromUrl(ele.href);
       if (!changeId || changeId === picCommentAtId) {
         noteObj.handler(picCommentAtId, ele, undefined, {
           prefix: '@',
-      // anchorElementNote：通用的锚点处理函数，用于那些在页面上出现的任意用户链接（例如推荐、侧边栏、搜索结果等）。
-      // 它会尽量从 href 中解析用户名并调用 handler 以附加备注按钮。
           title: true
         });
       }
@@ -261,8 +226,6 @@
       noteObj.handler(itemId, ele);
     }
   }
-  // anchorElementNote：通用锚点处理函数，适用于任意由 selector 指定的 a 元素
-  // 可用于推荐模块、请求/建议用户等场景
   function userPageNote(ele, changeId) {
     const userPageId = noteObj.fn.getText(ele, selector.userPage.id);
     const userPageBox = noteObj.fn.query(ele, selector.userPage.box);
@@ -277,8 +240,6 @@
             className: [nameSet.userpageTag, nameSet.fontBold]
           });
         }
-        // userPageNote：处理用户个人主页上的备注展示。
-        // 在用户主页上会以更醒目的样式（例如标签或标题旁）展示备注，因此有不同的插入位置与样式参数。
       } else {
         const userNameText = noteObj.fn.getText(ele, selector.userPage.userName, 'warn');
         noteObj.handler(userPageId, ele, undefined, {
@@ -291,9 +252,6 @@
       }
     }
   }
-  // userPageNote：在用户个人主页上渲染备注（通常以大标签展示），
-  // - 当 changeId 可用时仅对对应用户更新，否则在页面加载时渲染一次
-  // - 使用 handler 的配置可以控制插入位置（after: userPageBox）和样式
   function userPageCommonNote(ele, changeId) {
     for (const commonUser of noteObj.fn.queryAll(ele, selector.userPage.common, 'info')) {
       const commonUserId = commonUser.textContent?.trim();
@@ -340,9 +298,6 @@
       }
     }
   }
-  // itemNote：基于传入的 idSelector 在给定容器内查找用户链接并注入备注（通用化工具函数）
-  // 逻辑与 anchorElementNote 类似，但通常使用更紧凑的样式。
-  // itemNote：基于传入的 idSelector 在给定容器内查找用户链接并注入备注（通用化工具函数）
   function instagramChangeEvent(changeId) {
     for (const article of noteObj.fn.queryAll(selector.homepage.article, 'none')) {
       homepageNote(article, changeId);
@@ -397,8 +352,6 @@
       anchorElementNote(suggest, changeId);
     }
   }
-  // instagramChangeEvent：主变更处理器，当页面节点/数据发生变化时由 noteObj 调用。
-  // 它会遍历各类场景（首页、对话、故事、推荐、用户页等）并调用对应的渲染函数。
   function instagramHomepageEvent(newValue, oldValue) {
     for (const article of noteObj.fn.queryAll(selector.homepage.article)) {
       const articleUser = noteObj.fn.queryAnchor(article, selector.homepage.id);
