@@ -12,13 +12,15 @@ AI 修复脚本：Instagram - 为用户添加备注(别名/标签)
 
 这一版是真的修好了。
 
+**Greasyfork：** [scripts/601215](https://greasyfork.org/zh-CN/scripts/601215-instagram-%E4%B8%BA%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E5%A4%87%E6%B3%A8-%E5%88%AB%E5%90%8D-%E6%A0%87%E7%AD%BE-%E4%BF%AE%E5%A4%8D%E7%89%88)
+
 ---
 
 ## 安装
 
 需要 Tampermonkey 或 Violentmonkey。
 
-**方式一**：Greasyfork 搜「Instagram - 为用户添加备注(别名/标签) 修复版」
+**方式一（推荐）**：[Instagram - 为用户添加备注(别名/标签) 修复版](https://greasyfork.org/zh-CN/scripts/601215-instagram-%E4%B8%BA%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E5%A4%87%E6%B3%A8-%E5%88%AB%E5%90%8D-%E6%A0%87%E7%AD%BE-%E4%BF%AE%E5%A4%8D%E7%89%88)
 
 **方式二**：直接安装本仓库文件
 
