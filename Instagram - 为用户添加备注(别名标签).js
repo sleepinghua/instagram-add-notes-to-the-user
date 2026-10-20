@@ -740,6 +740,6 @@
   };
   initInstagram();
   window.setTimeout(() => {
-    console.info("[IG-Note] 6.3.0 已启动 · 帖子 " + document.querySelectorAll("article").length + " · 已挂按钮 " + document.querySelectorAll("." + nameSet.homepageBtn).length + " · 可执行 __igNoteDiag() 自检");
+    console.info("[IG-Note] 6.3.1 已启动 · 帖子 " + document.querySelectorAll("article").length + " · 已挂按钮 " + document.querySelectorAll("." + nameSet.homepageBtn).length + " · 可执行 __igNoteDiag() 自检");
   }, 3e3);
 })();
