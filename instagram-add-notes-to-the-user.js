@@ -5,7 +5,7 @@
 // @namespace           https://greasyfork.org/zh-CN/scripts/601215
 // @homepage            https://github.com/sleepinghua/instagram-add-notes-to-the-user
 // @icon                data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiBhcmlhLWxhYmVsbGVkYnk9Im5ld0ljb25UaXRsZSIgc3Ryb2tlPSJyZ2JhKDI5LDE2MSwyNDIsMS4wMCkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZmlsbD0ibm9uZSIgY29sb3I9InJnYmEoMjksMTYxLDI0MiwxLjAwKSI+IDx0aXRsZSBpZD0ibmV3SWNvblRpdGxlIj5OZXc8L3RpdGxlPiA8cGF0aCBkPSJNMTkgMTRWMjJIMi45OTk5N1Y0SDEzIi8+IDxwYXRoIGQ9Ik0xNy40NjA4IDQuMDM5MjFDMTguMjQxOCAzLjI1ODE3IDE5LjUwODIgMy4yNTgxNiAyMC4yODkyIDQuMDM5MjFMMjAuOTYwOCA0LjcxMDc5QzIxLjc0MTggNS40OTE4NCAyMS43NDE4IDYuNzU4MTcgMjAuOTYwOCA3LjUzOTIxTDExLjU4NTggMTYuOTE0MkMxMS4yMTA3IDE3LjI4OTMgMTAuNzAyIDE3LjUgMTAuMTcxNiAxNy41TDcuNSAxNy41TDcuNSAxNC44Mjg0QzcuNSAxNC4yOTggNy43MTA3MSAxMy43ODkzIDguMDg1NzkgMTMuNDE0MkwxNy40NjA4IDQuMDM5MjFaIi8+IDxwYXRoIGQ9Ik0xNi4yNSA1LjI1TDE5Ljc1IDguNzUiLz4gPC9zdmc+
-// @version             6.3.9
+// @version             6.3.10
 // @updateURL           https://raw.githubusercontent.com/sleepinghua/instagram-add-notes-to-the-user/main/instagram-add-notes-to-the-user.js
 // @downloadURL         https://raw.githubusercontent.com/sleepinghua/instagram-add-notes-to-the-user/main/instagram-add-notes-to-the-user.js
 // @description         为 Instagram 用户添加备注(别名/标签)，支持分组、自定义颜色与 WebDAV 同步。修复 2026 年新版页面结构导致的整体失效，可切换「替换用户名 / 用户名 + 胶囊」。
@@ -41,7 +41,7 @@
     return;
   }
   const UPDATED = "2026-10-21";
-  const IG_VERSION = "6.3.9";
+  const IG_VERSION = "6.3.10";
   const INS_ICON = {
     NOTE_BLACK: "url(data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiBhcmlhLWxhYmVsbGVkYnk9Im5ld0ljb25UaXRsZSIgc3Ryb2tlPSJyZ2IoMzgsIDM4LCAzOCkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZmlsbD0ibm9uZSIgY29sb3I9InJnYigzOCwgMzgsIDM4KSI+IDx0aXRsZSBpZD0ibmV3SWNvblRpdGxlIj5OZXc8L3RpdGxlPiA8cGF0aCBkPSJNMTkgMTRWMjJIMi45OTk5N1Y0SDEzIi8+IDxwYXRoIGQ9Ik0xNy40NjA4IDQuMDM5MjFDMTguMjQxOCAzLjI1ODE3IDE5LjUwODIgMy4yNTgxNiAyMC4yODkyIDQuMDM5MjFMMjAuOTYwOCA0LjcxMDc5QzIxLjc0MTggNS40OTE4NCAyMS43NDE4IDYuNzU4MTcgMjAuOTYwOCA3LjUzOTIxTDExLjU4NTggMTYuOTE0MkMxMS4yMTA3IDE3LjI4OTMgMTAuNzAyIDE3LjUgMTAuMTcxNiAxNy41TDcuNSAxNy41TDcuNSAxNC44Mjg0QzcuNSAxNC4yOTggNy43MTA3MSAxMy43ODkzIDguMDg1NzkgMTMuNDE0MkwxNy40NjA4IDQuMDM5MjFaIi8+IDxwYXRoIGQ9Ik0xNi4yNSA1LjI1TDE5Ljc1IDguNzUiLz4gPC9zdmc+)"
   };
@@ -90,7 +90,7 @@
     homepageBtn: "note-obj-ins-homepage-btn",
     userpageBtn: "note-obj-ins-userpage-btn"
   };
-  const INS_STYLE = `\n    .${nameSet.backgroundBox} {\n      display: inline-block;\n      vertical-align: middle;\n      align-items: center;\n      white-space: nowrap;\n      \n      font-size: 13px;\n      font-weight: 400;\n      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;\n      line-height: 1.6;\n      padding: 1px 8px;\n      \n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      border-radius: 50px;\n      background-color: #336699;\n      color: #fff;\n    }\n    .${nameSet.addBtn} {\n      \n      display: inline-block;\n      vertical-align: middle;\n      flex: 0 0 auto;\n      \n      border-radius: 4px;\n      background-color: rgba(255, 255, 255, .82);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .10);\n      background-image: ${INS_ICON.NOTE_BLACK};\n      \n      background-size: 18px;\n      background-repeat: no-repeat;\n      background-position: center;\n      margin-left: 5px;\n      cursor: pointer;\n      width: 18px;\n      height: 18px;\n      min-width: 18px;\n      min-height: 18px;\n    }\n    .${nameSet.homepageBtn} {\n      margin: 6px !important;\n    }\n    .${nameSet.homepageBtn}:hover {\n      opacity: 0.5;\n    }\n    .${nameSet.userpageBtn} {\n      \n      align-self: center;\n      vertical-align: middle;\n      position: relative;\n      top: -1px;\n      margin: 0 0 0 5px;\n    }\n    .ig-note-toast {\n      position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px;\n      z-index: 2147483647; background: #262626; color: #fff; padding: 8px 16px;\n      border-radius: 20px; font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;\n      box-shadow: 0 4px 18px rgba(0, 0, 0, .3);\n    }\n    \n    #${SETTINGS_BTN_ID} {\n      position: fixed !important;\n      right: 16px !important;\n      \n      bottom: 96px !important;\n      \n      bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;\n      z-index: 99990 !important;\n      display: flex !important;\n      align-items: center;\n      justify-content: center;\n      box-sizing: border-box !important;\n      width: 30px !important;\n      height: 30px !important;\n      margin: 0;\n      padding: 0;\n      border-radius: 8px;\n      background-color: rgba(255, 255, 255, .82);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .10), 0 2px 8px rgba(0, 0, 0, .12);\n      color: #262626;\n      cursor: pointer;\n      pointer-events: auto;\n      opacity: .92;\n      -webkit-tap-highlight-color: transparent;\n      user-select: none;\n      -webkit-user-select: none;\n      transition: opacity .15s ease, background-color .15s ease, box-shadow .15s ease;\n    }\n    #${SETTINGS_BTN_ID}:hover {\n      opacity: 1;\n      background-color: rgba(255, 255, 255, .97);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .16), 0 4px 12px rgba(0, 0, 0, .18);\n    }\n    #${SETTINGS_BTN_ID}:active {\n      transform: scale(.94);\n    }\n    #${SETTINGS_BTN_ID}:focus-visible {\n      outline: 2px solid #336699;\n      outline-offset: 2px;\n    }\n    \n    .ig-note-profile-text {\n      font-size: 14px;\n      font-weight: 400;\n    }\n    \n    .ig-note-profile-pill {\n      \n      margin-left: 6px;\n    }\n    \n    .note-obj-ins-clip {\n      display: inline-block;\n      vertical-align: middle;\n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      white-space: nowrap;\n    }\n    .note-obj-settings-frame-card label {\n      color: #2f2f2f;\n    }\n    .note-obj-interface-dark .note-obj-settings-frame-card label {\n      color: #fff;\n    }\n    .note-obj-group-frame-tbody input,\n    .note-obj-webdav-frame-form-item input {\n      color: #000;\n    }`;
+  const INS_STYLE = `\n    .${nameSet.backgroundBox} {\n      display: inline-block;\n      vertical-align: middle;\n      align-items: center;\n      white-space: nowrap;\n      \n      \n      font-size: 13px;\n      font-weight: 600;\n      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;\n      line-height: 1.6;\n      padding: 1px 8px;\n      \n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      border-radius: 50px;\n      background-color: #336699;\n      color: #fff;\n    }\n    .${nameSet.addBtn} {\n      \n      display: inline-block;\n      vertical-align: middle;\n      flex: 0 0 auto;\n      \n      border-radius: 4px;\n      background-color: rgba(255, 255, 255, .82);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .10);\n      background-image: ${INS_ICON.NOTE_BLACK};\n      \n      background-size: 18px;\n      background-repeat: no-repeat;\n      background-position: center;\n      margin-left: 5px;\n      cursor: pointer;\n      width: 18px;\n      height: 18px;\n      min-width: 18px;\n      min-height: 18px;\n    }\n    .${nameSet.homepageBtn} {\n      margin: 6px !important;\n    }\n    .${nameSet.homepageBtn}:hover {\n      opacity: 0.5;\n    }\n    .${nameSet.userpageBtn} {\n      \n      align-self: center;\n      vertical-align: middle;\n      position: relative;\n      top: -1px;\n      margin: 0 0 0 5px;\n    }\n    .ig-note-toast {\n      position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px;\n      z-index: 2147483647; background: #262626; color: #fff; padding: 8px 16px;\n      border-radius: 20px; font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;\n      box-shadow: 0 4px 18px rgba(0, 0, 0, .3);\n    }\n    \n    #${SETTINGS_BTN_ID} {\n      position: fixed !important;\n      right: 16px !important;\n      \n      bottom: 96px !important;\n      \n      bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;\n      z-index: 99990 !important;\n      display: flex !important;\n      align-items: center;\n      justify-content: center;\n      box-sizing: border-box !important;\n      width: 30px !important;\n      height: 30px !important;\n      margin: 0;\n      padding: 0;\n      border-radius: 8px;\n      background-color: rgba(255, 255, 255, .82);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .10), 0 2px 8px rgba(0, 0, 0, .12);\n      color: #262626;\n      cursor: pointer;\n      pointer-events: auto;\n      opacity: .92;\n      -webkit-tap-highlight-color: transparent;\n      user-select: none;\n      -webkit-user-select: none;\n      transition: opacity .15s ease, background-color .15s ease, box-shadow .15s ease;\n    }\n    #${SETTINGS_BTN_ID}:hover {\n      opacity: 1;\n      background-color: rgba(255, 255, 255, .97);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .16), 0 4px 12px rgba(0, 0, 0, .18);\n    }\n    #${SETTINGS_BTN_ID}:active {\n      transform: scale(.94);\n    }\n    #${SETTINGS_BTN_ID}:focus-visible {\n      outline: 2px solid #336699;\n      outline-offset: 2px;\n    }\n    \n    .ig-note-profile-text {\n      font-size: 14px;\n      font-weight: 400;\n    }\n    \n    .ig-note-profile-pill {\n      \n      margin-left: 6px;\n    }\n    \n    .note-obj-ins-clip {\n      display: inline-block;\n      vertical-align: middle;\n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      white-space: nowrap;\n    }\n    .note-obj-settings-frame-card label {\n      color: #2f2f2f;\n    }\n    .note-obj-interface-dark .note-obj-settings-frame-card label {\n      color: #fff;\n    }\n    .note-obj-group-frame-tbody input,\n    .note-obj-webdav-frame-form-item input {\n      color: #000;\n    }`;
   const noteObj = new Note_Obj({
     id: "myInstagramNote",
     script: {
@@ -255,11 +255,36 @@
       b: parseInt(h.slice(4, 6), 16)
     };
   }
-  function pickReadableTextColor(background) {
-    const rgb = parseHexColor(background);
-    if (!rgb) return "#ffffff";
-    const luma = (.299 * rgb.r + .587 * rgb.g + .114 * rgb.b) / 255;
-    return luma > .6 ? "#111111" : "#ffffff";
+  function relativeLuminance(rgb) {
+    const f = c => {
+      const v = c / 255;
+      return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4);
+    };
+    return .2126 * f(rgb.r) + .7152 * f(rgb.g) + .0722 * f(rgb.b);
+  }
+  function contrastRatio(a, b) {
+    const la = relativeLuminance(a);
+    const lb = relativeLuminance(b);
+    return (Math.max(la, lb) + .05) / (Math.min(la, lb) + .05);
+  }
+  function pickReadableTextColor(background, preferred) {
+    const bg = parseHexColor(background);
+    if (!bg) return preferred || "#ffffff";
+    const black = {
+      r: 17,
+      g: 17,
+      b: 17
+    };
+    const white = {
+      r: 255,
+      g: 255,
+      b: 255
+    };
+    const darkHex = contrastRatio(bg, black) >= contrastRatio(bg, white) ? "#111111" : "#ffffff";
+    if (!preferred) return darkHex;
+    const fg = parseHexColor(preferred);
+    if (!fg) return preferred;
+    return contrastRatio(bg, fg) >= 3.5 ? preferred : darkHex;
   }
   function groupColorEnabled() {
     try {
@@ -296,7 +321,7 @@
       }
     }
     if (primary) pill.style.backgroundColor = primary; else pill.style.removeProperty("background-color");
-    pill.style.color = secondary || pickReadableTextColor(primary);
+    pill.style.color = pickReadableTextColor(primary, secondary);
   }
   function findMyPill(anchor) {
     const n = anchor.nextElementSibling;
