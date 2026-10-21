@@ -25,7 +25,7 @@ AI 修复脚本：Instagram - 为用户添加备注(别名/标签)
 **方式二**：直接安装本仓库文件
 
 ```
-https://raw.githubusercontent.com/sleepinghua/instagram-add-notes-to-the-user/main/Instagram%20-%20%E4%B8%BA%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E5%A4%87%E6%B3%A8(%E5%88%AB%E5%90%8D%E6%A0%87%E7%AD%BE).js
+https://raw.githubusercontent.com/sleepinghua/instagram-add-notes-to-the-user/main/instagram-add-notes-to-the-user.js
 ```
 
 
