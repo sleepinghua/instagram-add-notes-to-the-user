@@ -5,7 +5,7 @@
 // @namespace           https://greasyfork.org/zh-CN/scripts/601215
 // @homepage            https://github.com/sleepinghua/instagram-add-notes-to-the-user
 // @icon                data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiBhcmlhLWxhYmVsbGVkYnk9Im5ld0ljb25UaXRsZSIgc3Ryb2tlPSJyZ2JhKDI5LDE2MSwyNDIsMS4wMCkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZmlsbD0ibm9uZSIgY29sb3I9InJnYmEoMjksMTYxLDI0MiwxLjAwKSI+IDx0aXRsZSBpZD0ibmV3SWNvblRpdGxlIj5OZXc8L3RpdGxlPiA8cGF0aCBkPSJNMTkgMTRWMjJIMi45OTk5N1Y0SDEzIi8+IDxwYXRoIGQ9Ik0xNy40NjA4IDQuMDM5MjFDMTguMjQxOCAzLjI1ODE3IDE5LjUwODIgMy4yNTgxNiAyMC4yODkyIDQuMDM5MjFMMjAuOTYwOCA0LjcxMDc5QzIxLjc0MTggNS40OTE4NCAyMS43NDE4IDYuNzU4MTcgMjAuOTYwOCA3LjUzOTIxTDExLjU4NTggMTYuOTE0MkMxMS4yMTA3IDE3LjI4OTMgMTAuNzAyIDE3LjUgMTAuMTcxNiAxNy41TDcuNSAxNy41TDcuNSAxNC44Mjg0QzcuNSAxNC4yOTggNy43MTA3MSAxMy43ODkzIDguMDg1NzkgMTMuNDE0MkwxNy40NjA4IDQuMDM5MjFaIi8+IDxwYXRoIGQ9Ik0xNi4yNSA1LjI1TDE5Ljc1IDguNzUiLz4gPC9zdmc+
-// @version             6.3.5
+// @version             6.3.7
 // @updateURL           https://raw.githubusercontent.com/sleepinghua/instagram-add-notes-to-the-user/main/instagram-add-notes-to-the-user.js
 // @downloadURL         https://raw.githubusercontent.com/sleepinghua/instagram-add-notes-to-the-user/main/instagram-add-notes-to-the-user.js
 // @description         为 Instagram 用户添加备注(别名/标签)，支持分组、自定义颜色与 WebDAV 同步。修复 2026 年新版页面结构导致的整体失效，可切换「替换用户名 / 用户名 + 胶囊」。
@@ -40,11 +40,13 @@
     console.error("[IG-Note] Note_Obj 依赖未加载，脚本无法运行。\n" + "请检查能否打开：https://gcore.jsdelivr.net/gh/LightAPIs/greasy-fork-library@da0437e6a856e05158df61225f2b9ea9943ad9ef/Note_Obj.js\n" + "若打不开可换成 https://fastly.jsdelivr.net/gh/LightAPIs/greasy-fork-library@da0437e6a856e05158df61225f2b9ea9943ad9ef/Note_Obj.js");
     return;
   }
-  const UPDATED = "2026-10-20";
-  const IG_VERSION = "6.3.5";
+  const UPDATED = "2026-10-21";
+  const IG_VERSION = "6.3.7";
   const INS_ICON = {
     NOTE_BLACK: "url(data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiBhcmlhLWxhYmVsbGVkYnk9Im5ld0ljb25UaXRsZSIgc3Ryb2tlPSJyZ2IoMzgsIDM4LCAzOCkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgZmlsbD0ibm9uZSIgY29sb3I9InJnYigzOCwgMzgsIDM4KSI+IDx0aXRsZSBpZD0ibmV3SWNvblRpdGxlIj5OZXc8L3RpdGxlPiA8cGF0aCBkPSJNMTkgMTRWMjJIMi45OTk5N1Y0SDEzIi8+IDxwYXRoIGQ9Ik0xNy40NjA4IDQuMDM5MjFDMTguMjQxOCAzLjI1ODE3IDE5LjUwODIgMy4yNTgxNiAyMC4yODkyIDQuMDM5MjFMMjAuOTYwOCA0LjcxMDc5QzIxLjc0MTggNS40OTE4NCAyMS43NDE4IDYuNzU4MTcgMjAuOTYwOCA3LjUzOTIxTDExLjU4NTggMTYuOTE0MkMxMS4yMTA3IDE3LjI4OTMgMTAuNzAyIDE3LjUgMTAuMTcxNiAxNy41TDcuNSAxNy41TDcuNSAxNC44Mjg0QzcuNSAxNC4yOTggNy43MTA3MSAxMy43ODkzIDguMDg1NzkgMTMuNDE0MkwxNy40NjA4IDQuMDM5MjFaIi8+IDxwYXRoIGQ9Ik0xNi4yNSA1LjI1TDE5Ljc1IDguNzUiLz4gPC9zdmc+)"
   };
+  const SETTINGS_BTN_ID = "ig-note-settings-btn";
+  const SETTINGS_ICON_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" ' + 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + '<circle cx="12" cy="12" r="3"/>' + '<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33' + " 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06" + "a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65" + " 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33" + "H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06" + "a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09" + 'a1.65 1.65 0 0 0-1.51 1z"/>' + "</svg>";
   const HAS_HAS = (() => {
     try {
       document.querySelector(":has(*)");
@@ -88,7 +90,7 @@
     homepageBtn: "note-obj-ins-homepage-btn",
     userpageBtn: "note-obj-ins-userpage-btn"
   };
-  const INS_STYLE = `\n    .${nameSet.backgroundBox} {\n      display: inline-block;\n      vertical-align: middle;\n      align-items: center;\n      white-space: nowrap;\n      \n      font-size: 13px;\n      font-weight: 400;\n      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;\n      line-height: 1.6;\n      padding: 1px 8px;\n      \n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      border-radius: 50px;\n      background-color: #336699;\n      color: #fff;\n    }\n    .${nameSet.addBtn} {\n      \n      display: inline-block;\n      vertical-align: middle;\n      flex: 0 0 auto;\n      \n      border-radius: 4px;\n      background-color: rgba(255, 255, 255, .82);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .10);\n      background-image: ${INS_ICON.NOTE_BLACK};\n      \n      background-size: 18px;\n      background-repeat: no-repeat;\n      background-position: center;\n      margin-left: 5px;\n      cursor: pointer;\n      width: 18px;\n      height: 18px;\n      min-width: 18px;\n      min-height: 18px;\n    }\n    .${nameSet.homepageBtn} {\n      margin: 6px !important;\n    }\n    .${nameSet.homepageBtn}:hover {\n      opacity: 0.5;\n    }\n    .${nameSet.userpageBtn} {\n      \n      align-self: center;\n      vertical-align: middle;\n      position: relative;\n      top: -1px;\n      margin: 0 0 0 5px;\n    }\n    .ig-note-toast {\n      position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px;\n      z-index: 2147483647; background: #262626; color: #fff; padding: 8px 16px;\n      border-radius: 20px; font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;\n      box-shadow: 0 4px 18px rgba(0, 0, 0, .3);\n    }\n    \n    .ig-note-profile-text {\n      font-size: 14px;\n      font-weight: 400;\n    }\n    \n    .ig-note-profile-pill {\n      \n      margin-left: 6px;\n    }\n    \n    .note-obj-ins-clip {\n      display: inline-block;\n      vertical-align: middle;\n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      white-space: nowrap;\n    }\n    .note-obj-settings-frame-card label {\n      color: #2f2f2f;\n    }\n    .note-obj-interface-dark .note-obj-settings-frame-card label {\n      color: #fff;\n    }\n    .note-obj-group-frame-tbody input,\n    .note-obj-webdav-frame-form-item input {\n      color: #000;\n    }`;
+  const INS_STYLE = `\n    .${nameSet.backgroundBox} {\n      display: inline-block;\n      vertical-align: middle;\n      align-items: center;\n      white-space: nowrap;\n      \n      font-size: 13px;\n      font-weight: 400;\n      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;\n      line-height: 1.6;\n      padding: 1px 8px;\n      \n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      border-radius: 50px;\n      background-color: #336699;\n      color: #fff;\n    }\n    .${nameSet.addBtn} {\n      \n      display: inline-block;\n      vertical-align: middle;\n      flex: 0 0 auto;\n      \n      border-radius: 4px;\n      background-color: rgba(255, 255, 255, .82);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .10);\n      background-image: ${INS_ICON.NOTE_BLACK};\n      \n      background-size: 18px;\n      background-repeat: no-repeat;\n      background-position: center;\n      margin-left: 5px;\n      cursor: pointer;\n      width: 18px;\n      height: 18px;\n      min-width: 18px;\n      min-height: 18px;\n    }\n    .${nameSet.homepageBtn} {\n      margin: 6px !important;\n    }\n    .${nameSet.homepageBtn}:hover {\n      opacity: 0.5;\n    }\n    .${nameSet.userpageBtn} {\n      \n      align-self: center;\n      vertical-align: middle;\n      position: relative;\n      top: -1px;\n      margin: 0 0 0 5px;\n    }\n    .ig-note-toast {\n      position: fixed; left: 50%; transform: translateX(-50%); bottom: 24px;\n      z-index: 2147483647; background: #262626; color: #fff; padding: 8px 16px;\n      border-radius: 20px; font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;\n      box-shadow: 0 4px 18px rgba(0, 0, 0, .3);\n    }\n    \n    #${SETTINGS_BTN_ID} {\n      position: fixed !important;\n      right: 16px !important;\n      \n      bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;\n      z-index: 99990 !important;\n      display: flex !important;\n      align-items: center;\n      justify-content: center;\n      box-sizing: border-box !important;\n      width: 30px !important;\n      height: 30px !important;\n      margin: 0;\n      padding: 0;\n      border-radius: 8px;\n      background-color: rgba(255, 255, 255, .82);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .10), 0 2px 8px rgba(0, 0, 0, .12);\n      color: #262626;\n      cursor: pointer;\n      pointer-events: auto;\n      opacity: .92;\n      -webkit-tap-highlight-color: transparent;\n      user-select: none;\n      -webkit-user-select: none;\n      transition: opacity .15s ease, background-color .15s ease, box-shadow .15s ease;\n    }\n    #${SETTINGS_BTN_ID}:hover {\n      opacity: 1;\n      background-color: rgba(255, 255, 255, .97);\n      box-shadow: 0 0 0 1px rgba(0, 0, 0, .16), 0 4px 12px rgba(0, 0, 0, .18);\n    }\n    #${SETTINGS_BTN_ID}:active {\n      transform: scale(.94);\n    }\n    #${SETTINGS_BTN_ID}:focus-visible {\n      outline: 2px solid #336699;\n      outline-offset: 2px;\n    }\n    \n    .ig-note-profile-text {\n      font-size: 14px;\n      font-weight: 400;\n    }\n    \n    .ig-note-profile-pill {\n      \n      margin-left: 6px;\n    }\n    \n    .note-obj-ins-clip {\n      display: inline-block;\n      vertical-align: middle;\n      max-width: 12em;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      white-space: nowrap;\n    }\n    .note-obj-settings-frame-card label {\n      color: #2f2f2f;\n    }\n    .note-obj-interface-dark .note-obj-settings-frame-card label {\n      color: #fff;\n    }\n    .note-obj-group-frame-tbody input,\n    .note-obj-webdav-frame-form-item input {\n      color: #000;\n    }`;
   const noteObj = new Note_Obj({
     id: "myInstagramNote",
     script: {
@@ -239,13 +241,25 @@
     const n = anchor.nextElementSibling;
     return n && n.nodeType === 1 && n.hasAttribute("data-ig-note-feed") ? n : null;
   }
+  function findOwnedPill(anchor, id) {
+    if (!anchor || !anchor.parentElement || !id) return null;
+    for (const n of anchor.parentElement.children) {
+      if (n.nodeType === 1 && n.hasAttribute("data-ig-note-feed") && n.getAttribute("data-ig-note-user") === id) return n;
+    }
+    return null;
+  }
   function ensureMyPill(anchor, id, text) {
     if (!anchor.parentElement) return;
     let pill = findMyPill(anchor);
     if (!pill) {
+      pill = findOwnedPill(anchor, id);
+      if (pill) anchor.insertAdjacentElement("afterend", pill);
+    }
+    if (!pill) {
       pill = document.createElement("span");
       pill.className = nameSet.backgroundBox;
       pill.setAttribute("data-ig-note-feed", "1");
+      pill.setAttribute("data-ig-note-user", id);
       anchor.insertAdjacentElement("afterend", pill);
     }
     if (pill.textContent !== text) pill.textContent = text;
@@ -258,13 +272,15 @@
     if (color) pill.style.backgroundColor = color;
     if (pill.title !== text) pill.title = text;
   }
-  function removeMyPill(anchor) {
+  function removeMyPill(anchor, id) {
     let n = anchor.nextElementSibling;
     while (n && n.nodeType === 1 && n.hasAttribute("data-ig-note-feed")) {
       const next = n.nextElementSibling;
       n.remove();
       n = next;
     }
+    const stray = findOwnedPill(anchor, id);
+    if (stray) stray.remove();
   }
   function resetAnchorText(anchor, id) {
     if (anchor.dataset.igNoteApplied !== "1") return;
@@ -286,7 +302,7 @@
     const tag = noteObj.getUserTag(id);
     if (!tag) {
       resetAnchorText(anchor, id);
-      removeMyPill(anchor);
+      removeMyPill(anchor, id);
       return;
     }
     if (pillMode) {
@@ -299,7 +315,7 @@
       ensureMyPill(anchor, id, tag);
       return;
     }
-    removeMyPill(anchor);
+    removeMyPill(anchor, id);
     const raw = (anchor.textContent || "").trim();
     const applied = anchor.dataset.igNoteApplied === "1";
     const isNameLink = applied || raw === id || opts && opts.prefix && raw === opts.prefix + id;
@@ -412,14 +428,35 @@
     if (changeId && changeId !== itemId) return;
     renderTextNote(itemId, ele);
   }
+  let profilePill = null;
+  let legacyTagsCleaned = false;
+  function clearProfileTags() {
+    if (legacyTagsCleaned) return;
+    legacyTagsCleaned = true;
+    document.querySelectorAll("." + nameSet.userpageTag).forEach(n => n.remove());
+  }
   function renderProfileNote(leaf, userPageId) {
-    if (!leaf) return;
+    if (!leaf || !leaf.isConnected) return;
     clearProfileTags();
     const host = leaf.closest("header") || leaf.parentElement || document.body;
-    let pill = host.querySelector('[data-ig-note-profile="1"]') || document.querySelector('[data-ig-note-profile="1"]');
+    if (profilePill && (!profilePill.isConnected || profilePill.previousElementSibling !== leaf)) {
+      profilePill.remove();
+      profilePill = null;
+    }
+    let pill = profilePill;
+    if (!pill) {
+      const found = host.querySelector('[data-ig-note-profile="1"]');
+      if (found) {
+        if (found.previousElementSibling === leaf) pill = found; else found.remove();
+      }
+    }
+    if (pill) profilePill = pill;
     const replace = readMode();
     if (replace) {
-      if (pill) pill.remove();
+      if (pill) {
+        pill.remove();
+        profilePill = null;
+      }
       leaf.classList.add("ig-note-profile-text");
       renderTextNote(userPageId, leaf, undefined);
       return;
@@ -428,7 +465,10 @@
     resetAnchorText(leaf, userPageId);
     const tagText = noteObj.getUserTag(userPageId);
     if (!tagText) {
-      if (pill) pill.remove();
+      if (pill) {
+        pill.remove();
+        profilePill = null;
+      }
       return;
     }
     if (!pill) {
@@ -436,6 +476,7 @@
       pill.className = nameSet.backgroundBox + " ig-note-profile-pill";
       pill.dataset.igNoteProfile = "1";
       leaf.insertAdjacentElement("afterend", pill);
+      profilePill = pill;
     }
     if (pill.textContent !== tagText) pill.textContent = tagText;
     let color = "";
@@ -447,10 +488,6 @@
     if (color) pill.style.backgroundColor = color;
     pill.title = tagText;
   }
-  function clearProfileTags() {
-    document.querySelectorAll("." + nameSet.userpageTag).forEach(n => n.remove());
-  }
-  let profileTries = 0;
   function sweepProfile() {
     const username = profileUserFromPath();
     if (!username) return;
@@ -488,7 +525,12 @@
     if (item) {
       const itemId = userIdFromAnchor(item);
       if (itemId && (!changeId || changeId === itemId)) {
-        noteObj.handler(itemId, item);
+        if (hasIcon(item)) {
+          const tag = noteObj.getUserTag(itemId);
+          if (tag && item.title !== tag) item.title = tag;
+        } else {
+          noteObj.handler(itemId, item);
+        }
       }
     }
     for (const el of ele.querySelectorAll('header [dir="auto"]')) {
@@ -513,6 +555,14 @@
     if (seg.length !== 1) return "";
     return isUserId(seg[0]) ? seg[0] : "";
   }
+  function profileLeafStillValid(leaf, userPageId) {
+    if (!leaf || !leaf.isConnected) return false;
+    if (leaf.dataset.igNoteProfileLeaf !== "1") return false;
+    const raw = (leaf.textContent || "").trim();
+    if (raw === userPageId) return true;
+    if (leaf.dataset.igNoteUser && leaf.dataset.igNoteUser !== userPageId) return false;
+    return leaf.dataset.igNoteApplied === "1" && leaf.dataset.igNoteUser === userPageId;
+  }
   function handleProfileHeader(header, changeId) {
     const main = document.querySelector("main") || document.body;
     let userPageId = profileUserFromPath();
@@ -521,8 +571,18 @@
       userPageId = (h2 && h2.textContent || "").trim();
     }
     if (!isUserId(userPageId)) return;
-    let leaf = document.querySelector('[data-ig-note-profile-leaf="1"]');
-    if (!leaf || !main.contains(leaf)) leaf = findUsernameLeaf(main, userPageId);
+    const cached = document.querySelector('[data-ig-note-profile-leaf="1"]');
+    let leaf = profileLeafStillValid(cached, userPageId) ? cached : findUsernameLeaf(main, userPageId);
+    if (!leaf) {
+      const raw = cached ? (cached.textContent || "").trim() : "";
+      const isOtherUser = isUserId(raw) && raw !== userPageId;
+      const owner = cached ? cached.dataset.igNoteUser || "" : "";
+      const isOtherOwner = !!owner && owner !== userPageId;
+      leaf = cached && cached.isConnected && !isOtherUser && !isOtherOwner ? cached : null;
+    } else if (cached && cached !== leaf) {
+      delete cached.dataset.igNoteProfileLeaf;
+      cached.classList.remove("ig-note-profile-text");
+    }
     if (!leaf) return;
     leaf.dataset.igNoteProfileLeaf = "1";
     mountProfileBtn(leaf, userPageId);
@@ -570,8 +630,8 @@
     for (const dialog of document.querySelectorAll(selector.dialog.frame)) {
       safe("dialog", () => handleArticle(dialog, changeId));
     }
-    for (const header of document.querySelectorAll(selector.userPage.header)) {
-      safe("profile", () => handleProfileHeader(header, changeId));
+    if (profileUserFromPath()) {
+      safe("profile", () => handleProfileHeader(document.querySelector(selector.userPage.header), changeId));
     }
     for (const section of document.querySelectorAll(selector.stories.frame)) {
       if (!section.querySelector("header")) continue;
@@ -602,6 +662,11 @@
     sweepBusy = true;
     const t0 = (window.performance || Date).now();
     try {
+      try {
+        ensureSettingsButton();
+      } catch (e) {
+        warnOnce("settings-btn", e);
+      }
       try {
         sweepProfile();
       } catch (e) {
@@ -635,7 +700,10 @@
       }
       try {
         if (selector.homepageStories.idShell) {
-          for (const item of document.querySelectorAll(selector.homepageStories.idShell)) homepageStoriesNote(item);
+          for (const item of document.querySelectorAll(selector.homepageStories.idShell)) {
+            if (item.closest("article")) continue;
+            homepageStoriesNote(item);
+          }
         }
       } catch (e) {
         warnOnce("sweep-tray", e);
@@ -684,16 +752,68 @@
       toast("已重新扫描");
     });
   }
+  function openSettingsPanel() {
+    const targets = [];
+    try {
+      if (noteObj && noteObj.store && typeof noteObj.store.showFrame === "function") {
+        targets.push(noteObj.store);
+      }
+      if (noteObj && typeof noteObj.showFrame === "function") targets.push(noteObj);
+    } catch (e) {
+      console.warn("[IG-Note] 读取 noteObj.store 失败：", e);
+    }
+    for (const target of targets) {
+      try {
+        const panelAlreadyOpen = target.showFrame("settings");
+        return panelAlreadyOpen !== false;
+      } catch (e) {
+        console.warn('[IG-Note] showFrame("settings") 调用失败：', e);
+      }
+    }
+    console.warn("[IG-Note] 未能打开设置面板：Note_Obj 的 store.showFrame 不可用。");
+    toast("请通过油猴菜单 → 设置 打开");
+    return false;
+  }
+  function ensureSettingsButton() {
+    if (!document.body) return null;
+    const exists = document.getElementById(SETTINGS_BTN_ID);
+    if (exists) return exists;
+    const btn = document.createElement("div");
+    btn.id = SETTINGS_BTN_ID;
+    btn.className = "ig-note-settings-btn";
+    btn.setAttribute("role", "button");
+    btn.setAttribute("tabindex", "0");
+    btn.setAttribute("aria-label", "IG 备注：打开设置");
+    btn.title = "IG 备注 " + IG_VERSION + " · 设置";
+    btn.innerHTML = SETTINGS_ICON_SVG;
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      openSettingsPanel();
+    });
+    btn.addEventListener("pointerdown", e => {
+      e.stopPropagation();
+    });
+    btn.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        e.stopPropagation();
+        openSettingsPanel();
+      }
+    });
+    document.body.appendChild(btn);
+    return btn;
+  }
   function initInstagram() {
     try {
       document.documentElement.setAttribute("data-ig-note", IG_VERSION);
-      const badge = document.createElement("div");
-      badge.textContent = "IG 备注 " + IG_VERSION + " 已启动";
-      badge.style.cssText = "position:fixed;right:12px;bottom:12px;z-index:2147483647;" + "background:#262626;color:#fff;font:12px/1.5 system-ui,-apple-system,sans-serif;" + "padding:6px 12px;border-radius:16px;opacity:.92;pointer-events:none";
-      document.body.appendChild(badge);
-      window.setTimeout(() => badge.remove(), 3e3);
     } catch (e) {}
     registerMenus();
+    try {
+      ensureSettingsButton();
+    } catch (e) {
+      console.warn("[IG-Note] 注入设置按钮失败：", e);
+    }
     if (typeof MutationObserver !== "undefined" && document.body) {
       const mo = new MutationObserver(scheduleSweep);
       mo.observe(document.body, {
@@ -721,6 +841,16 @@
       "被改写的用户名数": document.querySelectorAll("[data-ig-note-applied]").length,
       "胶囊数": document.querySelectorAll("." + nameSet.backgroundBox).length,
       "铅笔按钮数": document.querySelectorAll("." + nameSet.addBtn).length,
+      "设置按钮(页面右下角)": !!document.getElementById(SETTINGS_BTN_ID),
+      "设置面板入口": (() => {
+        try {
+          if (noteObj && noteObj.store && typeof noteObj.store.showFrame === "function") return "noteObj.store.showFrame";
+          if (noteObj && typeof noteObj.showFrame === "function") return "noteObj.showFrame";
+        } catch (e) {
+          return "读取失败：" + e.message;
+        }
+        return "不可用（请走油猴菜单）";
+      })(),
       "当前呈现": readMode() ? "替换用户名" : "用户名 + 胶囊",
       "作者状态(前5篇)": [ ...document.querySelectorAll(selector.homepage.article) ].slice(0, 5).map(a => {
         const au = pickUserAnchor(headerOf(a) || a);
